@@ -97,3 +97,8 @@ logs/
 # OS
 .DS_Store
 Thumbs.db
+
+# Docker
+# Keep `docker-compose.override.yml` so each developer can mount host paths
+# to the container without committing their personal setup.
+docker-compose.override.yml

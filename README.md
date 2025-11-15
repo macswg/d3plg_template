@@ -33,3 +33,23 @@ Tips:
         - /path/to/plugin:/plugin-output
   ```
   and then point `.build-target` to `/plugin-output`.
+
+### Targeting a path outside the repo on Windows
+
+1. Create `docker-compose.override.yml` (ignored by git) and mount the host folder that contains all plugin build outputs:
+- Note: Use forward slashes or escape the back slashes if using windows paths (should look like the exmple below).
+   ```yaml
+   services:
+     dev:
+       volumes:
+         - "C:/path/to/d3/plugins/folder:/host-plugins"
+   ```
+   Adjust the Windows path for your plugin directory; the right side (`/host-plugins`) is how the container sees it.
+2. Edit `.build-target` so it points to a subfolder within that mount, e.g. `/host-plugins/<plugin-name>`.
+3. Run `docker compose build` (or `--no-cache` if you changed the Dockerfile) followed by `docker compose up`.
+
+4. Build the plugin from scratch without starting the dev server by running:
+   ```
+   docker compose run --rm dev npm run build
+   ```
+   This runs `npm run build` inside the dev container once and exits, writing the output straight into your host plugin folder.
