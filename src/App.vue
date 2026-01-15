@@ -18,9 +18,17 @@ import { useLiveUpdate, LiveUpdateOverlay } from '@disguise-one/vue-liveupdate'
 import TextLayerControl from './components/TextLayerControl.vue'
 import PlayheadDisplay from './components/PlayheadDisplay.vue'
 
+
 // Extract the director endpoint from the URL query parameters
+// Supports localhost, Tailscale, and explicit director parameter
 const urlParams = new URLSearchParams(window.location.search)
-const directorEndpoint = urlParams.get('director') || 'localhost:80' // Fallback for development
+const { hostname, protocol } = window.location
+const isLocalhost = hostname === 'localhost' || hostname === '127.0.0.1'
+// Use current hostname (works for Tailscale if accessed via Tailscale hostname)
+// For localhost, use localhost; otherwise use the current hostname (Tailscale or otherwise)
+const defaultDirector = isLocalhost ? 'localhost:80' : `${hostname}:80`
+const directorEndpoint = urlParams.get('director') || defaultDirector
+
 
 // Initialize the live update composable for the overlay
 const liveUpdate = useLiveUpdate(directorEndpoint)
