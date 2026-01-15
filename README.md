@@ -53,3 +53,18 @@ Tips:
    docker compose run --rm dev npm run build
    ```
    This runs `npm run build` inside the dev container once and exits, writing the output straight into your host plugin folder.
+
+## Python Type Stubs
+
+The `src/d3.pyi` file provides type hints, autocomplete, and code analysis for the d3 module in your IDE. This stub file enables:
+
+- **Type checking**: Catch type errors before runtime
+- **Autocomplete**: Get intelligent code completion for d3 API calls
+- **Code analysis**: Better refactoring and navigation support
+
+Most modern Python IDEs (VS Code with Pylance, PyCharm, etc.) will automatically detect and use this stub file when you have `src/` in your Python path. The stub file is already included in the codebase and should work out of the box.
+
+To ensure your IDE recognizes the stub file:
+- Make sure `src/` is included in your Python path/workspace
+- If using VS Code, the Python extension should automatically detect `.pyi` files in your workspace
+- If using PyCharm, it will automatically use stub files in your project directory
