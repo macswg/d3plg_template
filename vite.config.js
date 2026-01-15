@@ -40,6 +40,7 @@ function resolveBuildOutputDir() {
 }
 
 const buildOutDir = resolveBuildOutputDir()
+const isDocker = process.env.DOCKER === 'true'
 
 export default defineConfig({
   plugins: [
