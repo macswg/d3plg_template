@@ -46,6 +46,20 @@ export default defineConfig({
     vue(),
     designerPythonLoader()
   ],
+  server: {
+    port: 5173,
+    host: '0.0.0.0', // Allow external connections (needed for Docker)
+    watch: {
+      // Use polling in Docker (especially needed on Windows), native watching otherwise
+      usePolling: isDocker,
+      interval: isDocker ? 1000 : undefined, // Polling interval only when polling is enabled
+    },
+    hmr: {
+      port: 5173,
+      host: 'localhost', // HMR host - browser connects to localhost
+      clientPort: 5173, // Port the client connects to
+    },
+  },
   build: {
     outDir: buildOutDir,
     emptyOutDir: false,
